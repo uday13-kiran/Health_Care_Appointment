@@ -1,4 +1,4 @@
-from sqlalchemy import Column,String,ForeignKey,DateTime,UUID,Text,func
+from sqlalchemy import Column,String,ForeignKey,DateTime,UUID,Text,func,Date
 import uuid
 from core.database import Base
 
@@ -19,4 +19,13 @@ class Docotr(Base):
     status=Column(String(25),nullable=False)
     created_at=Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
 
-class Patient
+class Patient(Base):
+    __tablename__='patient'
+    patient_id=Column(UUID(as_uuid=True),primary_key=True,default=uuid.uuid4)
+    name=Column(String(200),nullable=False)
+    gender=Column(String(10),nullable=False)
+    date_of_birth=Column(Date,nullable=False)
+    phone=Column(String(10),nullable=False,unique=True)
+    email=Column(String(200),nullable=False,unique=True)
+    address=Column(String(300),nullable=False)
+    created_at=Column(DateTime(timezone=True),server_default=func.now(),nullable=False)
