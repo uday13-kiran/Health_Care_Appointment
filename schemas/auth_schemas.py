@@ -33,7 +33,7 @@ class CreateVisit(BaseModel):
     appointment_id:UUID = Field(...,description = 'unidue id of appointment')
     check_in_time:datetime = Field(...,description = 'appointment check in time')
     check_out_time:datetime = Field(...,description = 'appointment check out time')
-    status:str = Field (min_length = 20,max_length = 40,decription = 'status of the visit')
+    status:str = Field(min_length = 20,max_length = 40,decription = 'status of the visit')
     notes:str = Field (...,description = 'notes of visit') 
     
 class CreateQueue(BaseModel):
@@ -84,4 +84,87 @@ class CreateAudit_Log(BaseModel):
     action:str = Field(...,description = 'audit_log action')
     details:str = Field(...,description = 'audit_log details') 
     timestamp:str = Field(...,description = 'audit_log timestamp')
+
+
+class UpdateSpecialization(BaseModel):
+    name: Optional[str] = Field(None, min_length=1, max_length=200)
+    description: Optional[str] = Field(None, max_length=250)
+
+
+class UpdateDoctor(BaseModel):
+    name: Optional[str] = Field(None, min_length=1, max_length=225)
+    specialization: Optional[UUID] = None
+    phone: Optional[str] = Field(None, min_length=1, max_length=10)
+    email: Optional[str] = Field(None, min_length=1, max_length=225)
+    qualification: Optional[str] = Field(None, min_length=1, max_length=100)
+    status: Optional[str] = Field(None, min_length=1, max_length=25)
+
+
+class UpdatePatient(BaseModel):
+    name: Optional[str] = Field(None, min_length=1, max_length=200)
+    gender: Optional[str] = Field(None, min_length=1, max_length=10)
+    date_of_birth: Optional[date] = None
+    phone: Optional[str] = Field(None, min_length=1, max_length=10)
+    email: Optional[str] = Field(None, min_length=1, max_length=200)
+    address: Optional[str] = Field(None, min_length=1, max_length=300)
+
+
+class UpdateAppointment(BaseModel):
+    patient_id: Optional[UUID] = None
+    doctor_id: Optional[UUID] = None
+    appointment_date: Optional[date] = None
+    start_time: Optional[datetime] = None
+    end_time: Optional[datetime] = None
+    status: Optional[str] = Field(None, min_length=1, max_length=25)
+    reason: Optional[str] = Field(None, min_length=1, max_length=25)
+
+
+class UpdateVisit(BaseModel):
+    patient_id: Optional[UUID] = None
+    appoint_id: Optional[UUID] = None
+    check_in_time: Optional[datetime] = None
+    check_out_time: Optional[datetime] = None
+    status: Optional[str] = Field(None, min_length=1, max_length=25)
+    notes: Optional[str] = Field(None, max_length=250)
+
+
+class UpdateConsultation(BaseModel):
+    visit_id: Optional[UUID] = None
+    doctor_id: Optional[UUID] = None
+    start_time: Optional[datetime] = None
+    end_time: Optional[datetime] = None
+    diagnosis: Optional[str] = Field(None, max_length=250)
+    prescription: Optional[str] = Field(None, max_length=250)
+    notes: Optional[str] = Field(None, max_length=250)
+    status: Optional[str] = Field(None, min_length=1, max_length=25)
+
+
+class UpdateQueue(BaseModel):
+    visit_id: Optional[UUID] = None
+    queue_number: Optional[str] = Field(None, min_length=1, max_length=25)
+    status: Optional[str] = Field(None, min_length=1, max_length=25)
+    priority: Optional[str] = Field(None, min_length=1, max_length=250)
+
+
+class UpdateAudit_Log(BaseModel):
+    visit_id: Optional[UUID] = None
+    action: Optional[str] = Field(None, min_length=1, max_length=25)
+    details: Optional[str] = Field(None, min_length=1, max_length=25)
+
+
+class UpdateDoctor_Availability(BaseModel):
+    doctor_id: Optional[UUID] = None
+    day_of_week: Optional[str] = Field(None, min_length=1, max_length=25)
+    start_time: Optional[datetime] = None
+    end_time: Optional[datetime] = None
+    is_break: Optional[bool] = None
+    is_leave: Optional[bool] = None
+
+
+class UpdateLeave(BaseModel):
+    doctor_id: Optional[UUID] = None
+    start_date: Optional[datetime] = None
+    end_date: Optional[datetime] = None
+    reason: Optional[str] = Field(None, min_length=1, max_length=25)
+    status: Optional[str] = Field(None, min_length=1, max_length=25)
           

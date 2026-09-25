@@ -1,11 +1,11 @@
 from core.settings import settings
 from sqlalchemy.engine import create_engine
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import sessionmaker
 
-Base=DeclarativeBase()
 engine=create_engine(settings.DataBaseUrl)
-SessionLocal=Session(
+Base=declarative_base()
+SessionLocal=sessionmaker(
     autocommit=False,
     autoflush=False,
     bind=engine
